@@ -1,7 +1,6 @@
 import logging
 import os
 import sys
-from importlib.metadata import version as lib_version
 from pathlib import Path
 from typing import Optional, Tuple, Union
 
@@ -28,8 +27,7 @@ def init_vlc():
     else:
         log.info("No embedded vlc path, will try to find system VLC...")
 
-    vlc_python_version = lib_version("python-vlc")
-    vlc_version = _get_vlc_version()
+    vlc_version, vlc_python_version = _get_vlc_version()
 
     log.debug(f"python-vlc {vlc_python_version}")
     log.debug(f"VLC {vlc_version}")
@@ -96,4 +94,4 @@ def _get_vlc_version():
     except NameError:
         return None
 
-    return vlc_version.decode().split(" ")[0]
+    return vlc_version.decode().split(" ")[0], vlc.__version__
