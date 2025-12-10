@@ -884,7 +884,7 @@ description = "The subset of a Qt installation needed by PyQt5."
 optional = false
 python-versions = "*"
 groups = ["main"]
-markers = "sys_platform != \"darwin\""
+markers = "sys_platform == \"win32\" or sys_platform == \"linux\""
 files = [
     {file = "PyQt5_Qt5-5.15.2-py3-none-macosx_10_13_intel.whl", hash = "sha256:76980cd3d7ae87e3c7a33bfebfaee84448fd650bad6840471d6cae199b56e154"},
     {file = "PyQt5_Qt5-5.15.2-py3-none-manylinux2014_x86_64.whl", hash = "sha256:1988f364ec8caf87a6ee5d5a3a5210d57539988bf8e84714c7d60972692e2f4a"},
@@ -899,7 +899,7 @@ description = "The subset of a Qt installation needed by PyQt5."
 optional = false
 python-versions = "*"
 groups = ["main"]
-markers = "sys_platform == \"darwin\""
+markers = "sys_platform != \"win32\" and sys_platform != \"linux\""
 files = [
     {file = "pyqt5_qt5-5.15.18-py3-none-macosx_10_13_x86_64.whl", hash = "sha256:8bb997eb903afa9da3221a0c9e6eaa00413bbeb4394d5706118ad05375684767"},
     {file = "pyqt5_qt5-5.15.18-py3-none-macosx_11_0_arm64.whl", hash = "sha256:c656af9c1e6aaa7f59bf3d8995f2fa09adbf6762b470ed284c31dca80d686a26"},
@@ -976,18 +976,6 @@ tomli = {version = ">=1.0.0", markers = "python_version < \"3.11\""}
 
 [package.extras]
 testing = ["argcomplete", "attrs (>=19.2.0)", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
-
-[[package]]
-name = "python-vlc"
-version = "3.0.11115"
-description = "VLC bindings for python."
-optional = false
-python-versions = "*"
-groups = ["main"]
-files = [
-    {file = "python-vlc-3.0.11115.tar.gz", hash = "sha256:a4d3bdddfce84a8fb1b2d5447193a0239c55c16ca246e5194d48efd59c4e236b"},
-    {file = "python_vlc-3.0.11115-py3-none-any.whl", hash = "sha256:508bc5b4b4fd72b4e23c926795bdcd38c7c1c08a4dd6b8cc87b0abd1d7118aa1"},
-]
 
 [[package]]
 name = "pyyaml"
@@ -1319,4 +1307,4 @@ test = ["pytest (>=8.1,<9.0)", "pytest-rerunfailures (>=14.0,<15.0)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10"
-content-hash = "73eee858297cdca5c7ead7754d25a820791dc022803a708c99f5d7c889d99c86"
+content-hash = "258e10e298f2d12f40ba55de72f03e74bfc41fcbe2f8bc0f1e912ddf421b2cc5"
