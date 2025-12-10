@@ -113,7 +113,7 @@ class TracksManager(object):
 
 
 def _convert_video_track(video_track):
-    vt_content = video_track.video.contents
+    vt_content = video_track.u.video.contents
 
     if all([vt_content.frame_rate_num, vt_content.frame_rate_den]):
         fps = round(vt_content.frame_rate_num / vt_content.frame_rate_den, 3)
@@ -135,7 +135,7 @@ def _convert_video_track(video_track):
 
 
 def _convert_audio_track(audio_track):
-    at_content = audio_track.audio.contents
+    at_content = audio_track.u.audio.contents
 
     return AudioTrack(
         channels=at_content.channels,
