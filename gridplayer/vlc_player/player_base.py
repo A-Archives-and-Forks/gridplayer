@@ -221,7 +221,6 @@ class VlcPlayerBase(ABC):
             self.loopback_load_video_st2_set_media()
 
     def cb_time_changed(self, event):
-        # Doesn't work anymore since python-vlc-3.0.12117
         new_time = int(event.u.new_time)
 
         if new_time == 0:
