@@ -7308,7 +7308,7 @@ def libvlc_log_count(p_log):
     return f(p_log)
 
 
-def libvlc_log_get_context(ctx, module, file):
+def libvlc_log_get_context(ctx):
     """Gets log message debug infos.
 
     This function retrieves self-debug information about a log message:
@@ -7334,18 +7334,18 @@ def libvlc_log_get_context(ctx, module, file):
         "libvlc_log_get_context",
         (
             (1,),
-            (1,),
-            (1,),
+            (2,),
+            (2,),
             (2,),
         ),
         None,
         None,
         Log_ptr,
-        ListPOINTER(ctypes.c_char_p),
-        ListPOINTER(ctypes.c_char_p),
+        ctypes.POINTER(ctypes.c_char_p),
+        ctypes.POINTER(ctypes.c_char_p),
         ctypes.POINTER(ctypes.c_uint),
     )
-    return f(ctx, module, file)
+    return f(ctx)
 
 
 def libvlc_log_get_iterator(p_log):
@@ -7366,7 +7366,7 @@ def libvlc_log_get_iterator(p_log):
     return f(p_log)
 
 
-def libvlc_log_get_object(ctx, name, header, id):
+def libvlc_log_get_object(ctx, id):
     """Gets log message info.
 
     This function retrieves meta-information about a log message:
@@ -7397,18 +7397,18 @@ def libvlc_log_get_object(ctx, name, header, id):
         "libvlc_log_get_object",
         (
             (1,),
-            (1,),
-            (1,),
+            (2,),
+            (2,),
             (1,),
         ),
         None,
         None,
         Log_ptr,
-        ListPOINTER(ctypes.c_char_p),
-        ListPOINTER(ctypes.c_char_p),
+        ctypes.POINTER(ctypes.c_char_p),
+        ctypes.POINTER(ctypes.c_char_p),
         ctypes.POINTER(ctypes.c_uint),
     )
-    return f(ctx, name, header, id)
+    return f(ctx, id)
 
 
 def libvlc_log_iterator_free(p_iter):
