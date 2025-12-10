@@ -1,8 +1,7 @@
 import logging
 from typing import Dict, Optional
 
-import vlc
-
+from gridplayer.vlc_player import vlc
 from gridplayer.vlc_player.static import NO_TRACK, AudioTrack, VideoTrack
 
 

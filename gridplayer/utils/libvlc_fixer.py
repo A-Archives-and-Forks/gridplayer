@@ -31,7 +31,7 @@ def importing_embed_vlc():
 
 
 def _fix_plugins_path():
-    vlc_module = sys.modules["vlc"]
+    vlc_module = sys.modules["gridplayer.vlc_player.vlc"]
 
     if vlc_module.plugin_path is not None:
         if Path(vlc_module.plugin_path).name == "plugins":
@@ -57,7 +57,7 @@ def _fix_plugins_path():
 
 
 def _get_libvlc_root_path() -> Optional[Path]:
-    vlc_module = sys.modules["vlc"]
+    vlc_module = sys.modules["gridplayer.vlc_player.vlc"]
 
     if vlc_module.dll is None or vlc_module.dll._name is None:
         return None
