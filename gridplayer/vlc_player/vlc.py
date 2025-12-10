@@ -4899,6 +4899,14 @@ SubtitleTrack._fields_ = (("encoding", ctypes.c_char_p),)
 
 
 class MediaTrack(_Cstruct):
+    class U(ctypes.Union):
+        pass
+
+    U._fields_ = (
+        ("audio", ctypes.POINTER(AudioTrack)),
+        ("video", ctypes.POINTER(VideoTrack)),
+        ("subtitle", ctypes.POINTER(SubtitleTrack)),
+    )
     pass
 
 
@@ -4909,9 +4917,7 @@ MediaTrack._fields_ = (
     ("type", TrackType),
     ("profile", ctypes.c_int),
     ("level", ctypes.c_int),
-    ("audio", ctypes.POINTER(AudioTrack)),
-    ("video", ctypes.POINTER(VideoTrack)),
-    ("subtitle", ctypes.POINTER(SubtitleTrack)),
+    ("u", MediaTrack.U),
     ("bitrate", ctypes.c_uint),
     ("language", ctypes.c_char_p),
     ("description", ctypes.c_char_p),
