@@ -85,7 +85,7 @@ def config_log(
         "formatters": {
             # Modify log message format here or replace with your custom formatter class
             "my_formatter": {
-                "format": "%(asctime)s (%(process)d) | %(name)s |"  # noqa: WPS323
+                "format": "%(asctime)s (%(process)d) | %(name)s |"
                 " %(levelname)s | %(message)s"
             }
         },
@@ -95,7 +95,7 @@ def config_log(
                 "class": "logging.StreamHandler",
                 "level": "DEBUG",
                 "formatter": "my_formatter",
-                "stream": sys.__stderr__,  # noqa: WPS609
+                "stream": sys.__stderr__,
             },
             "file": {
                 # Sends all log messages to a file

@@ -48,7 +48,7 @@ class StreamlinkResolver(ResolverBase):
         return Streams({**video_streams, **audio_only_streams})
 
     @staticmethod
-    def is_able_to_handle(url: str):  # noqa: WPS602
+    def is_able_to_handle(url: str):
         try:
             return bool(Streamlink().resolve_url(url))
         except NoPluginError:
@@ -116,7 +116,7 @@ class StreamlinkResolver(ResolverBase):
         return audio_streams
 
     @cached_property
-    def _raw_streams_audio_only_muxed(self):  # noqa: WPS210
+    def _raw_streams_audio_only_muxed(self):
         muxed_streams = [
             stream
             for stream in self._raw_streams.values()

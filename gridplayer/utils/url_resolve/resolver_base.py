@@ -28,8 +28,7 @@ class ResolverBase(ABC):
 
     @staticmethod
     @abstractmethod
-    def is_able_to_handle(url) -> bool:  # noqa: WPS602
-        ...
+    def is_able_to_handle(url) -> bool: ...
 
     def resolve(self) -> ResolvedVideo:
         return ResolvedVideo(
@@ -56,5 +55,5 @@ class DirectResolver(ResolverBase):
         return Streams({"generic": Stream(url=self.url, protocol="direct")})
 
     @staticmethod
-    def is_able_to_handle(url: str):  # noqa: WPS602
+    def is_able_to_handle(url: str):
         return True

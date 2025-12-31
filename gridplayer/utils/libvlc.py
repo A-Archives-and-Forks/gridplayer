@@ -81,7 +81,7 @@ def _get_embed_vlc_root() -> Optional[Path]:
 def _get_vlc_version():
     try:
         with importing_embed_vlc():
-            from gridplayer.vlc_player import vlc  # noqa: WPS433
+            from gridplayer.vlc_player import vlc
     except (OSError, NotImplementedError):
         return None
 

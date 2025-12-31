@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Union
+from typing import List
 
 from PyQt5.QtCore import pyqtSignal
 

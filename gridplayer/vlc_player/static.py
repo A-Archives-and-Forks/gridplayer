@@ -147,7 +147,7 @@ class MediaInput(object):
         loop_start = self.video.loop_start or 0
         loop_end = self.video.loop_end or self.length
 
-        return random.randint(loop_start, loop_end)  # noqa: S311
+        return random.randint(loop_start, loop_end)
 
 
 class NotPausedError(Exception):

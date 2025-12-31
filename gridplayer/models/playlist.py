@@ -32,7 +32,7 @@ class Playlist(BaseModel):
 
     @classmethod
     def read(cls, filename):
-        with open(filename, "r", encoding="utf-8") as f:
+        with Path(filename).open("r", encoding="utf-8") as f:
             playlist_txt = f.read()
 
         return cls.parse(playlist_txt)
@@ -52,7 +52,7 @@ class Playlist(BaseModel):
     def save(self, filename: Path):
         playlist_txt = self.dumps()
 
-        with open(filename, "w", encoding="utf-8") as f:
+        with Path(filename).open("w", encoding="utf-8") as f:
             f.write(playlist_txt)
 
     def dumps(self):
@@ -102,7 +102,7 @@ class Playlist(BaseModel):
             try:
                 videos.append(Video(**video_args))
             except ValidationError as e:
-                logger.error(f"Failed to add video '{uri}'")
+                logger.error(f"Failed to add video '{uri}'")  # noqa: TRY400
                 logger.debug(e)
 
         return videos

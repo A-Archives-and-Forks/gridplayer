@@ -94,7 +94,7 @@ class ProxyRequestHandler(BaseHTTPRequestHandler):
 
         super().__init__(*args, **kwargs)
 
-    def log_message(self, format, *args):  # noqa: WPS125
+    def log_message(self, format, *args):
         message = "{0} - {1}".format(self.address_string(), format % args)
         self._log.debug(message)
 
@@ -104,7 +104,7 @@ class ProxyRequestHandler(BaseHTTPRequestHandler):
         except (ConnectionResetError, ConnectionAbortedError):
             self.close_connection = True
 
-    def do_GET(self):  # noqa: WPS210
+    def do_GET(self):
         req = self
 
         request_headers = _filter_request_headers(dict(req.headers))
@@ -196,11 +196,7 @@ def _filter_request_headers(headers: Dict[str, str]):
         "user-agent",
     }
 
-    return {
-        k: v
-        for k, v in headers.items()
-        if k.lower() not in filtered_headers  # noqa: WPS221
-    }
+    return {k: v for k, v in headers.items() if k.lower() not in filtered_headers}
 
 
 def _filter_response_headers(headers: Dict[str, str]):
@@ -209,8 +205,4 @@ def _filter_response_headers(headers: Dict[str, str]):
         "date",
     }
 
-    return {
-        k: v
-        for k, v in headers.items()
-        if k.lower() not in filtered_headers  # noqa: WPS221
-    }
+    return {k: v for k, v in headers.items() if k.lower() not in filtered_headers}

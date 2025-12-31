@@ -57,10 +57,10 @@ class YoutubeDLResolver(ResolverBase):
         )
 
     @staticmethod
-    def is_able_to_handle(url: str) -> bool:  # noqa: WPS602
+    def is_able_to_handle(url: str) -> bool:
         logger = logging.getLogger("YoutubeDLResolver")
         with YoutubeDL({"logger": logger}) as ydl:
-            ies = ydl._ies  # noqa: WPS437
+            ies = ydl._ies
             return any(ie.suitable(url) for ie in ies.values())
 
     @cached_property
@@ -80,7 +80,7 @@ class YoutubeDLResolver(ResolverBase):
 
     @cached_property
     def _raw_streams(self):
-        if self._video_info.get("direct") == True:
+        if self._video_info.get("direct"):
             self._log.debug("yt-dlp reports direct link, passing it to DirectResolver")
             raise NoResolverPlugin
 
@@ -135,9 +135,7 @@ class YoutubeDLResolver(ResolverBase):
     def _service_id(self) -> str:
         return "yt_dlp-{0}".format(self._video_info["extractor"])
 
-    def _get_streams(  # noqa: WPS210
-        self, raw_streams_main, raw_streams_audio, is_live
-    ) -> Streams:
+    def _get_streams(self, raw_streams_main, raw_streams_audio, is_live) -> Streams:
         streams = Streams()
 
         unknown_counter = itertools.count(1)

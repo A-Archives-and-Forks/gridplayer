@@ -44,7 +44,7 @@ class VideoFrameDummy(VideoFrameVLC):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self._color = QColor(random.choice(QColor.colorNames()))  # noqa: S311
+        self._color = QColor(random.choice(QColor.colorNames()))
 
         self._fake_media_track = Media(
             length=FAKE_VIDEO_LENGTH,
@@ -102,7 +102,7 @@ class VideoFrameDummy(VideoFrameVLC):
     def set_time(self, seek_ms):
         self._fake_player_time = seek_ms
 
-    def get_ms_per_frame(self):  # noqa: WPS615
+    def get_ms_per_frame(self):
         return self._ms_per_frame
 
     def _fake_player_forward(self):

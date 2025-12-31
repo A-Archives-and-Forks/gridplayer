@@ -55,7 +55,7 @@ def translate(context, text):
 
 def only_initialized_player(func):
     def wrapper(*args, **kwargs):
-        self = args[0]  # noqa: WPS117
+        self = args[0]
         if self._media_player is not None:
             return func(*args, **kwargs)
 
@@ -663,7 +663,7 @@ class VlcPlayerBase(ABC):
                 )
                 return None
 
-            self._log.debug(f"Failed to initialize video time, probably live")
+            self._log.debug("Failed to initialize video time, probably live")
 
         self._tracks_manager.set_video_track_id(self.media_input.video.video_track_id)
         self._tracks_manager.set_audio_track_id(self.media_input.video.audio_track_id)

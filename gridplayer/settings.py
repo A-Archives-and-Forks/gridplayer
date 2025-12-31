@@ -113,7 +113,7 @@ class _Settings(object):
     def set(self, setting_name, setting_value):
         setting_type = type(_default_settings[setting_name])
 
-        if setting_type != type(setting_value):  # noqa: WPS516
+        if setting_type is not type(setting_value):
             raise ValueError(
                 f"Setting {setting_name} is of type {setting_type}"
                 f" but value is of type {type(setting_value)}"
@@ -166,8 +166,7 @@ class _Settings(object):
         res_list = []
 
         self.settings.beginGroup(setting)
-        for key in self.settings.childKeys():
-            res_list.append(self.settings.value(key))
+        res_list.extend(self.settings.value(key) for key in self.settings.childKeys())
         self.settings.endGroup()
 
         return setting_type(res_list)
@@ -197,10 +196,10 @@ class _Settings(object):
 
 
 def Settings():
-    global SETTINGS  # noqa: WPS420
+    global SETTINGS
 
     if not SETTINGS:
-        SETTINGS = _Settings()  # noqa: WPS442
+        SETTINGS = _Settings()
 
     return SETTINGS
 

@@ -34,7 +34,7 @@ class QCustomSpinboxInput(QDialog):
         main_layout.addWidget(self.buttons)
 
     @classmethod
-    def get_int(  # noqa: WPS211
+    def get_int(
         cls,
         parent,
         title,

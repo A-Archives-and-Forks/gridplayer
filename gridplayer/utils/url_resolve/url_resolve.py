@@ -129,7 +129,7 @@ def _pick_resolvers(url) -> Dict[URLResolver, Type[ResolverBase]]:
     return url_resolvers
 
 
-def _get_resolvers(  # noqa: WPS210
+def _get_resolvers(
     url: str,
 ) -> Dict[URLResolver, Type[ResolverBase]]:
     priority_resolver: URLResolver = Settings().get("streaming/resolver_priority")
@@ -137,12 +137,16 @@ def _get_resolvers(  # noqa: WPS210
 
     url_resolver = patterns.get_resolver(url) or priority_resolver
 
-    resolvers = {url_resolver: RESOLVER_MAP[url_resolver]}
-    for resolver_id, resolver in RESOLVER_MAP.items():
-        if resolver_id != url_resolver:
-            resolvers[resolver_id] = resolver
+    resolvers = {
+        resolver_id: resolver
+        for resolver_id, resolver in RESOLVER_MAP.items()
+        if resolver_id != url_resolver
+    }
 
-    return resolvers
+    return {
+        url_resolver: RESOLVER_MAP[url_resolver],
+        **resolvers,
+    }
 
 
 def _is_match_youtube(url: str) -> bool:

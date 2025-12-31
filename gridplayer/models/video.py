@@ -87,7 +87,7 @@ def filter_video_uris(uris: Iterable[str]) -> List[Video]:
         try:
             video = Video(uri=parse_uri(uri))
         except ValidationError as e:
-            logging.getLogger("filter_video_uris").error(str(e))
+            logging.getLogger("filter_video_uris").error(str(e))  # noqa: TRY400
             continue
 
         valid_urls.append(video)

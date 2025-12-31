@@ -305,12 +305,12 @@ class VideoFrameVLC(QWidget, metaclass=QABC):
 
         self.adjust_view()
 
-    def set_scale(self, scale) -> None:  # noqa: WPS615
+    def set_scale(self, scale) -> None:
         self._scale = scale
 
         self.adjust_view()
 
-    def set_crop(self, crop) -> None:  # noqa: WPS615
+    def set_crop(self, crop) -> None:
         self._aspect = VideoAspect.NONE
         self._crop = crop
 

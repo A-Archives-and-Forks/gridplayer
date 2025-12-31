@@ -1,9 +1,9 @@
 import dataclasses
 import logging
-import os
 from functools import partial
 from io import IOBase
 from itertools import chain
+from pathlib import Path
 from typing import Dict
 
 from requests import Response
@@ -23,11 +23,11 @@ CHUNK_SIZE = 8192
 
 
 class HTTPStreamProxy(HTTPStream):
-    def __init__(  # noqa: WPS211
+    def __init__(
         self,
         server,
         session_opts: StreamSessionOpts,
-        session_,  # noqa: WPS120
+        session_,
         url: str,
         buffered: bool = True,
         **args,
@@ -77,7 +77,7 @@ class HLSProxy(HTTPStreamProxy):
             **reqargs,
         )
 
-        base_url = os.path.dirname(self.args["url"]) + "/"
+        base_url = f"{Path(self.args['url']).parent}/"
         hls_playlist = parse_m3u8(self._res.text, base_url)
 
         hls_playlist_txt = self._proxify_hls_playlist(hls_playlist)

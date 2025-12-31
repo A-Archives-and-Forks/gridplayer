@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import Dict, Iterable, Optional, Tuple
 
 
-class HashableDict(dict):  # noqa: WPS600
+class HashableDict(dict):
     def __hash__(self):
         return hash(frozenset(self.items()))
 
@@ -36,7 +36,7 @@ class Streams(object):
     def __getitem__(self, key):
         return self.streams[key]
 
-    def __setitem__(self, key, value):  # noqa: WPS110
+    def __setitem__(self, key, value):
         self.streams[key] = value
 
     def __len__(self):
@@ -48,7 +48,7 @@ class Streams(object):
     def __reversed__(self):
         return reversed(self.streams)
 
-    def items(self) -> Iterable[Tuple[str, Stream]]:  # noqa: WPS110
+    def items(self) -> Iterable[Tuple[str, Stream]]:
         return self.streams.items()
 
     @property
@@ -71,7 +71,7 @@ class Streams(object):
         if not self.audio_only_streams:
             return None
 
-        return list(self.audio_only_streams.items())[0]
+        return next(iter(self.audio_only_streams.items()))
 
     @property
     def best(self) -> Tuple[str, Stream]:
@@ -83,7 +83,7 @@ class Streams(object):
     @property
     def worst(self) -> Tuple[str, Stream]:
         if self.video_streams:
-            return list(self.video_streams.items())[0]
+            return next(iter(self.video_streams.items()))
 
         return self.worst_audio_only
 

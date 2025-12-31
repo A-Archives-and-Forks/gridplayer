@@ -47,7 +47,7 @@ class QDynamicAction(QAction):
             return self._title[self.toggle()]
 
         if isinstance(self._title, tuple):
-            raise ValueError("Title is tuple with no toggle function")
+            raise TypeError("Title is tuple with no toggle function")
 
         return self._title
 
@@ -57,7 +57,7 @@ class QDynamicAction(QAction):
             return self._icon_id[self.toggle()]
 
         if isinstance(self._icon_id, tuple):
-            raise ValueError("Icon ID is tuple with no toggle function")
+            raise TypeError("Icon ID is tuple with no toggle function")
 
         return self._icon_id
 

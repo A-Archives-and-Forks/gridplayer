@@ -48,23 +48,13 @@ class TracksManager(object):
             t_id for t_id, _ in self._media_player.video_get_track_description()[1:]
         ]
 
-        tracks_map.update(
-            {
-                real_id: t_id
-                for real_id, t_id in zip(video_track_real_ids, self.video_tracks)
-            }
-        )
+        tracks_map.update(dict(zip(video_track_real_ids, self.video_tracks)))
 
         audio_track_real_ids = [
             t_id for t_id, _ in self._media_player.audio_get_track_description()[1:]
         ]
 
-        tracks_map.update(
-            {
-                real_id: t_id
-                for real_id, t_id in zip(audio_track_real_ids, self.audio_tracks)
-            }
-        )
+        tracks_map.update(dict(zip(audio_track_real_ids, self.audio_tracks)))
 
         return tracks_map
 

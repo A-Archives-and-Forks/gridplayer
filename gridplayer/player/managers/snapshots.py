@@ -81,7 +81,7 @@ class SnapshotsManager(ManagerBase):
     def is_snapshot_exists(self, _id):
         return _id in self._snapshots
 
-    def set_snapshots(self, snapshots):  # noqa: WPS615
+    def set_snapshots(self, snapshots):
         self._snapshots = snapshots
 
     def clear_snapshots(self):

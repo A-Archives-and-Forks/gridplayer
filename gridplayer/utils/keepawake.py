@@ -5,7 +5,7 @@ from gridplayer.version import __app_name__
 
 logger = logging.getLogger(__name__)
 
-if env.IS_WINDOWS:  # noqa: C901
+if env.IS_WINDOWS:
     import ctypes
 
     SetThreadExecutionState = ctypes.windll.kernel32.SetThreadExecutionState

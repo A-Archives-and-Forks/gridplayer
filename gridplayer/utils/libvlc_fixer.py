@@ -62,7 +62,7 @@ def _get_libvlc_root_path() -> Optional[Path]:
     if vlc_module.dll is None or vlc_module.dll._name is None:
         return None
 
-    vlc_lib_root = Path(vlc_module.dll._name)  # noqa: WPS437
+    vlc_lib_root = Path(vlc_module.dll._name)
 
     if vlc_lib_root.is_absolute():
         return vlc_lib_root.parent
@@ -77,7 +77,7 @@ def _get_libvlc_root_path() -> Optional[Path]:
 def _get_libvlc_root_path_linux() -> Optional[Path]:
     # https://github.com/videolan/vlc/blob/3.0.16/src/linux/dirs.c#L33
 
-    with open("/proc/self/maps") as f:
+    with Path("/proc/self/maps").open() as f:
         maps = {line.split(" ")[-1] for line in f.readlines()}
 
     maps_seek = (m for m in maps if "/libvlc.so" in m)

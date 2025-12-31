@@ -70,7 +70,7 @@ class QStackedLayoutFloating(QStackedLayout):
 
 def only_initialized(func):
     def wrapper(*args, **kwargs):
-        self = args[0]  # noqa: WPS117
+        self = args[0]
         if not self.is_video_initialized:
             return None
         return func(*args, **kwargs)
@@ -80,7 +80,7 @@ def only_initialized(func):
 
 def only_seekable(func):
     def wrapper(*args, **kwargs):
-        self = args[0]  # noqa: WPS117
+        self = args[0]
         if self.is_live:
             return None
         return func(*args, **kwargs)
@@ -90,7 +90,7 @@ def only_seekable(func):
 
 def only_with_video_tacks(func):
     def wrapper(*args, **kwargs):
-        self = args[0]  # noqa: WPS117
+        self = args[0]
         if not self.video_tracks:
             return None
         return func(*args, **kwargs)
@@ -100,7 +100,7 @@ def only_with_video_tacks(func):
 
 def only_live(func):
     def wrapper(*args, **kwargs):
-        self = args[0]  # noqa: WPS117
+        self = args[0]
         if not self.is_live:
             return None
         return func(*args, **kwargs)
@@ -110,7 +110,7 @@ def only_live(func):
 
 def only_local_file(func):
     def wrapper(*args, **kwargs):
-        self = args[0]  # noqa: WPS117
+        self = args[0]
         if not self.is_local_file:
             return None
         return func(*args, **kwargs)
@@ -120,7 +120,7 @@ def only_local_file(func):
 
 def only_streamable(func):
     def wrapper(*args, **kwargs):
-        self = args[0]  # noqa: WPS117
+        self = args[0]
         if not self.streams:
             return None
         return func(*args, **kwargs)
@@ -128,7 +128,7 @@ def only_streamable(func):
     return wrapper
 
 
-class VideoBlock(QWidget):  # noqa: WPS230
+class VideoBlock(QWidget):
     load_video = pyqtSignal(MediaInput)
 
     about_to_close = pyqtSignal(str)
@@ -310,7 +310,7 @@ class VideoBlock(QWidget):  # noqa: WPS230
         self.layout_main.addWidget(self.video_driver)
         self.layout_main.addWidget(self.overlay)
 
-        if type(self.overlay) == OverlayBlock:  # noqa: WPS516
+        if type(self.overlay) is OverlayBlock:
             self.overlay.raise_()
 
     def crash(self, traceback_txt):
@@ -910,7 +910,7 @@ class VideoBlock(QWidget):  # noqa: WPS230
     @only_initialized
     @only_seekable
     def seek_random(self):
-        random_ms = random.randint(self.loop_start, self.loop_end)  # noqa: S311
+        random_ms = random.randint(self.loop_start, self.loop_end)
 
         self.seek(random_ms)
 
@@ -1088,7 +1088,7 @@ class VideoBlock(QWidget):  # noqa: WPS230
     def volume_increase(self):
         self.set_muted(False)
 
-        self.video_params.volume += 0.05  # noqa: WPS432
+        self.video_params.volume += 0.05
         self.video_params.volume = min(round(self.video_params.volume, 2), 1.0)
 
         self.set_volume(self.video_params.volume)
@@ -1097,7 +1097,7 @@ class VideoBlock(QWidget):  # noqa: WPS230
     def volume_decrease(self):
         self.set_muted(False)
 
-        self.video_params.volume -= 0.05  # noqa: WPS432
+        self.video_params.volume -= 0.05
         self.video_params.volume = max(round(self.video_params.volume, 2), 0)
 
         self.set_volume(self.video_params.volume)

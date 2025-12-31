@@ -53,9 +53,7 @@ class SafeSharedMemory(object):
     def ptr(self):
         if self._ptr is None:
             # https://stackoverflow.com/questions/32364876/how-to-get-the-address-of-mmap-ed-memory-in-python
-            ptr = (ctypes.c_char * self._buf_size).from_buffer(
-                self.memory._mmap  # noqa: WPS437
-            )
+            ptr = (ctypes.c_char * self._buf_size).from_buffer(self.memory._mmap)
             self._ptr = ctypes.cast(ptr, ctypes.c_void_p)
 
         return self._ptr
