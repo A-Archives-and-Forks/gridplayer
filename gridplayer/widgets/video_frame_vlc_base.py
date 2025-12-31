@@ -129,12 +129,10 @@ class VideoFrameVLC(QWidget, metaclass=QABC):
         return self.media.cur_audio_track_id
 
     @abstractmethod
-    def driver_setup(self, vlc_options) -> VLCVideoDriver:
-        ...
+    def driver_setup(self, vlc_options) -> VLCVideoDriver: ...
 
     @abstractmethod
-    def ui_video_surface(self) -> QWidget:
-        ...
+    def ui_video_surface(self) -> QWidget: ...
 
     def driver_connect(self) -> None:
         qt_connect(

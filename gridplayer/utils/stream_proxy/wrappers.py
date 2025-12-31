@@ -123,8 +123,7 @@ class HLSProxyLive(HLSStream):
 
         return res
 
-    def set_request_headers(self, headers: Dict[str, str]):
-        ...
+    def set_request_headers(self, headers: Dict[str, str]): ...
 
 
 class HLSMuxedStream(object):
@@ -151,8 +150,7 @@ class HLSMuxedStream(object):
 
         return res
 
-    def set_request_headers(self, headers: Dict[str, str]):
-        ...
+    def set_request_headers(self, headers: Dict[str, str]): ...
 
     def _generate_hls_playlist(self) -> str:
         res = ["#EXTM3U"]

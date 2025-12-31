@@ -16,18 +16,15 @@ class ResolverBase(ABC):
 
     @property
     @abstractmethod
-    def title(self) -> str:
-        ...
+    def title(self) -> str: ...
 
     @property
     @abstractmethod
-    def is_live(self) -> bool:
-        ...
+    def is_live(self) -> bool: ...
 
     @property
     @abstractmethod
-    def streams(self) -> Streams:
-        ...
+    def streams(self) -> Streams: ...
 
     @staticmethod
     @abstractmethod

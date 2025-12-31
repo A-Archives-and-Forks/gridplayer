@@ -53,11 +53,9 @@ class InstanceProcessVLC(InstanceProcess):
     def cleanup_instance(self):
         self._vlc.cleanup_instance()
 
-    def init_player_shared_data(self, player_id):
-        ...
+    def init_player_shared_data(self, player_id): ...
 
-    def release_player_shared_data(self, player_id):
-        ...
+    def release_player_shared_data(self, player_id): ...
 
     # outside
     def request_set_log_level_vlc(self, log_level):

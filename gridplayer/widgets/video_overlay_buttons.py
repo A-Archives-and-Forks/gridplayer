@@ -30,12 +30,10 @@ class OverlayButton(OverlayWidget, metaclass=QABC):
         self._is_off = False
 
     @abstractmethod
-    def icon(self, rect, painter, color_fg, color_bg):
-        ...
+    def icon(self, rect, painter, color_fg, color_bg): ...
 
     @abstractmethod
-    def icon_off(self, rect, painter, color_fg, color_bg):
-        ...
+    def icon_off(self, rect, painter, color_fg, color_bg): ...
 
     def paintEvent(self, event):
         painter = QPainter(self)
@@ -154,8 +152,7 @@ class OverlayExitButton(OverlayButton):
     def icon(self, rect, painter, color_fg, color_bg):
         return draw_cross(rect, painter, color_fg, color_bg)
 
-    def icon_off(self, rect, painter, color_fg, color_bg):
-        ...
+    def icon_off(self, rect, painter, color_fg, color_bg): ...
 
 
 class OverlayPlayPauseButton(OverlayButtonDynamic):

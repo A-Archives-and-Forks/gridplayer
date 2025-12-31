@@ -57,7 +57,8 @@ class VideoStatus(QWidget):
         if self.status_text:
             if self.can_fit_info:
                 status_info_min_height = min(
-                    int(self.height() * 0.1), 40  # noqa: WPS432
+                    int(self.height() * 0.1),
+                    40,  # noqa: WPS432
                 )
                 status_info_max_height = int(
                     status_info_min_height * 1.5  # noqa: WPS432

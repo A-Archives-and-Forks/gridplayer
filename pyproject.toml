@@ -45,18 +45,19 @@ gridplayer = "gridplayer.__main__:main"
 
 [dependency-groups]
 dev = [
-    #"flakehell>=0.9.0",
-    #"wemake-python-styleguide>=0.18.0",
-    "isort>=5.8.0",
-    "black>=23.3.0",
     "mdformat==1.0.0",
     "pre-commit>=2.15.0",
     "pytest>=7.1.2",
     "keepachangelog>=1.0.0",
+    "ruff (>=0.14.10,<0.15.0)",
 ]
 
 [tool.poetry.group.dev]
 optional = true
+
+[tool.ruff.format]
+line-ending = "lf"
+exclude = ["resources_bin.py"]
 
 [tool.flakehell]
 base = "https://raw.githubusercontent.com/wemake-services/wemake-python-styleguide/master/styles/flakehell.toml"
@@ -157,11 +158,3 @@ wemake-python-styleguide = ["+*", "-WPS204"]
 [tool.flakehell.exceptions."gridplayer/__main__.py"]
 # WPS433 nested imports
 wemake-python-styleguide = ["+*", "-WPS433"]
-
-[tool.black]
-line-length = 88
-exclude = '(.*\/resources_bin\.py)'
-
-[tool.isort]
-profile = "black"
-skip_gitignore = true
