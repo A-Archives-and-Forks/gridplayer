@@ -86,7 +86,7 @@ if env.IS_MACOS:
     _default_settings["player/video_driver"] = VideoDriver.VLC_HW_SP
 
 
-class _Settings(object):
+class _Settings:
     def __init__(self):
         settings_path = get_app_data_dir() / "settings.ini"
 

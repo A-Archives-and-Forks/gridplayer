@@ -322,25 +322,15 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
     def fill_playerVideoDriver(self):
         if env.IS_MACOS:
             video_drivers = {
-                VideoDriver.VLC_HW_SP: "{0} <VLC {1}>".format(
-                    self.tr("Hardware SP"), env.VLC_VERSION
-                ),
-                VideoDriver.VLC_SW: "{0} <VLC {1}>".format(
-                    self.tr("Software"), env.VLC_VERSION
-                ),
+                VideoDriver.VLC_HW_SP: f"{self.tr('Hardware SP')} <VLC {env.VLC_VERSION}>",
+                VideoDriver.VLC_SW: f"{self.tr('Software')} <VLC {env.VLC_VERSION}>",
                 VideoDriver.DUMMY: self.tr("Dummy"),
             }
         else:
             video_drivers = {
-                VideoDriver.VLC_HW: "{0} <VLC {1}>".format(
-                    self.tr("Hardware"), env.VLC_VERSION
-                ),
-                VideoDriver.VLC_HW_SP: "{0} <VLC {1}>".format(
-                    self.tr("Hardware SP"), env.VLC_VERSION
-                ),
-                VideoDriver.VLC_SW: "{0} <VLC {1}>".format(
-                    self.tr("Software"), env.VLC_VERSION
-                ),
+                VideoDriver.VLC_HW: f"{self.tr('Hardware')} <VLC {env.VLC_VERSION}>",
+                VideoDriver.VLC_HW_SP: f"{self.tr('Hardware SP')} <VLC {env.VLC_VERSION}>",
+                VideoDriver.VLC_SW: f"{self.tr('Software')} <VLC {env.VLC_VERSION}>",
                 VideoDriver.DUMMY: self.tr("Dummy"),
             }
 

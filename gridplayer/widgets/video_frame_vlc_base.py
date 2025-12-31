@@ -1,7 +1,6 @@
 import logging
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Optional
 
 from PyQt5.QtCore import QSize, Qt, pyqtSignal
 from PyQt5.QtGui import QPixmap
@@ -23,7 +22,7 @@ class PauseSnapshot(QLabel):
         self.setAlignment(Qt.AlignCenter)
         self.setStyleSheet("background-color:black;")
 
-        self._snapshot_pixmap: Optional[QPixmap] = None
+        self._snapshot_pixmap: QPixmap | None = None
 
     def set_snapshot_file(self, snapshot_file: str):
         # failed snapshot
@@ -63,7 +62,7 @@ class VideoFrameVLC(QWidget, metaclass=QABC):
     crash = pyqtSignal(str)
     update_status = pyqtSignal(str, int)
 
-    is_opengl: Optional[bool] = None
+    is_opengl: bool | None = None
 
     def __init__(self, vlc_options, **kwargs):
         super().__init__(**kwargs)
@@ -77,7 +76,7 @@ class VideoFrameVLC(QWidget, metaclass=QABC):
         self._is_status_change_in_progress = False
         self._is_cleanup_requested = False
 
-        self.media: Optional[Media] = None
+        self.media: Media | None = None
 
         self.ui_setup()
 
@@ -117,7 +116,7 @@ class VideoFrameVLC(QWidget, metaclass=QABC):
         return self.media.video_tracks
 
     @property
-    def cur_video_track_id(self) -> Optional[int]:
+    def cur_video_track_id(self) -> int | None:
         return self.media.cur_video_track_id
 
     @property
@@ -125,7 +124,7 @@ class VideoFrameVLC(QWidget, metaclass=QABC):
         return self.media.audio_tracks
 
     @property
-    def cur_audio_track_id(self) -> Optional[int]:
+    def cur_audio_track_id(self) -> int | None:
         return self.media.cur_audio_track_id
 
     @abstractmethod
@@ -181,7 +180,7 @@ class VideoFrameVLC(QWidget, metaclass=QABC):
     def update_status_emit(self, status: str, percent) -> None:
         self.update_status.emit(status, percent)
 
-    def cleanup(self) -> Optional[bool]:
+    def cleanup(self) -> bool | None:
         if self._is_cleanup_requested:
             return True
 
@@ -191,7 +190,7 @@ class VideoFrameVLC(QWidget, metaclass=QABC):
 
         self.video_driver.cleanup()
 
-    def adjust_view(self) -> Optional[bool]:
+    def adjust_view(self) -> bool | None:
         if self._is_cleanup_requested:
             return True
 

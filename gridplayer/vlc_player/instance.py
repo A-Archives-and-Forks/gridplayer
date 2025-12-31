@@ -3,8 +3,8 @@ import logging
 import platform
 import shlex
 import warnings
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator
 
 import certifi
 
@@ -66,7 +66,7 @@ class InstanceProcessVLC(InstanceProcess):
         self._vlc.set_log_level_vlc(log_level)
 
 
-class InstanceVLC(object):
+class InstanceVLC:
     log_level_map = {
         vlc.LogLevel.DEBUG: logging.DEBUG,
         vlc.LogLevel.ERROR: logging.ERROR,

@@ -11,7 +11,7 @@ from gridplayer.utils.log_config import QueueListenerRoot
 from gridplayer.utils.misc import force_terminate_children, force_terminate_children_all
 
 
-class PlayerInstance(object):
+class PlayerInstance:
     def __init__(self, instance, player_id):
         self._instance = instance
         self._player_id = player_id

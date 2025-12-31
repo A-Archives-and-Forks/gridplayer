@@ -5,7 +5,7 @@ from gridplayer.multiprocess.safe_shared_memory import releasing
 from gridplayer.vlc_player.libvlc import vlc
 
 
-class ImageDecoder(object):
+class ImageDecoder:
     def __init__(self, shared_memory, frame_ready_cb=None):
         super().__init__()
 

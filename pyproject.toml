@@ -101,7 +101,7 @@ select = [
     "T100", # flake8-debugger
     "TID",  # flake8-tidy-imports
     "TRY",  # tryceratops
-    #"UP",   # pyupgrade
+    "UP",   # pyupgrade
     "W",    # pycodestyle
     "YTT",  # flake8-2020
 ]

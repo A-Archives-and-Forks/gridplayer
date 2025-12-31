@@ -1,5 +1,4 @@
 from collections import Counter
-from typing import Dict
 
 from PyQt5.QtGui import QIcon, QKeySequence
 from PyQt5.QtWidgets import QAction
@@ -106,8 +105,8 @@ class ActionsManager(ManagerBase):
 
         self._ctx.actions = self._make_actions()
 
-    def _make_actions(self) -> Dict[str, QDynamicAction]:
-        actions: Dict[str, QDynamicAction] = {}
+    def _make_actions(self) -> dict[str, QDynamicAction]:
+        actions: dict[str, QDynamicAction] = {}
 
         for cmd_name, cmd in ACTIONS.items():
             action = self._make_action(cmd)

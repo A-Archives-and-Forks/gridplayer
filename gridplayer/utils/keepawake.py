@@ -17,7 +17,7 @@ if env.IS_WINDOWS:
 
     SPI_SETSCREENSAVEACTIVE = 0x0011
 
-    class KeepAwake(object):
+    class KeepAwake:
         def __init__(self):
             self.is_screensaver_off = False
 
@@ -57,7 +57,7 @@ elif env.IS_LINUX:
     from PyQt5.QtCore import QMetaType
     from PyQt5.QtDBus import QDBusArgument, QDBusConnection, QDBusInterface
 
-    class KeepAwake(object):
+    class KeepAwake:
         _services = (
             ("org.freedesktop.ScreenSaver", "/ScreenSaver"),
             (
@@ -153,7 +153,7 @@ elif env.IS_MACOS:
         removeNoIdleSleepAssertion,
     )
 
-    class KeepAwake(object):
+    class KeepAwake:
         def __init__(self):
             self.is_screensaver_off = False
 
@@ -186,7 +186,7 @@ elif env.IS_MACOS:
 
 else:
 
-    class KeepAwake(object):
+    class KeepAwake:
         def __init__(self):
             self.is_screensaver_off = False
 

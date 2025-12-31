@@ -3,7 +3,6 @@ import logging
 import re
 import traceback
 from functools import cached_property
-from typing import Optional, Tuple
 
 from yt_dlp import DownloadError, YoutubeDL
 from yt_dlp.utils import UnsupportedError
@@ -117,7 +116,7 @@ class YoutubeDLResolver(ResolverBase):
         if not streams_main:
             raise BadURLException("yt-dlp - no streams found")
 
-        self._log.debug("yt-dlp - {0} stream(s) found".format(len(streams_main)))
+        self._log.debug(f"yt-dlp - {len(streams_main)} stream(s) found")
 
         return streams_main, audio_streams
 
@@ -133,7 +132,7 @@ class YoutubeDLResolver(ResolverBase):
 
     @property
     def _service_id(self) -> str:
-        return "yt_dlp-{0}".format(self._video_info["extractor"])
+        return f"yt_dlp-{self._video_info['extractor']}"
 
     def _get_streams(self, raw_streams_main, raw_streams_audio, is_live) -> Streams:
         streams = Streams()
@@ -155,7 +154,7 @@ class YoutubeDLResolver(ResolverBase):
 
         return streams
 
-    def _get_m3u8_audio_tracks(self, raw_streams_audio) -> Optional[Streams]:
+    def _get_m3u8_audio_tracks(self, raw_streams_audio) -> Streams | None:
         if not raw_streams_audio:
             return None
 
@@ -164,7 +163,7 @@ class YoutubeDLResolver(ResolverBase):
         return self._get_streams(audio_tracks_m3u8, [], False)
 
     def _get_stream(
-        self, stream, m3u8_audio_tracks: Optional[Streams], is_live: bool
+        self, stream, m3u8_audio_tracks: Streams | None, is_live: bool
     ) -> Stream:
         is_m3u8 = "m3u8" in stream["protocol"]
 
@@ -194,7 +193,7 @@ class YoutubeDLResolver(ResolverBase):
         )
 
 
-def _get_stream_url(stream, is_live) -> Tuple[str, str]:
+def _get_stream_url(stream, is_live) -> tuple[str, str]:
     protocol = stream.get("protocol", "")
 
     if protocol in {"m3u8", "m3u8_native"}:
@@ -219,13 +218,13 @@ def _get_fmt_name(stream, unknown_counter, is_muxed=False):
     if not re.match(r"^\d+p", fmt_name):
         if stream.get("height"):
             if codec_info:
-                fmt_name = "{0}p [{1}]".format(stream["height"], codec_info)
+                fmt_name = f"{stream['height']}p [{codec_info}]"
             elif stream.get("format_id"):
-                fmt_name = "{0}p [{1}]".format(stream["height"], stream["format_id"])
+                fmt_name = f"{stream['height']}p [{stream['format_id']}]"
             else:
-                fmt_name = "{0}p".format(stream["height"])
+                fmt_name = f"{stream['height']}p"
         else:
-            fmt_name = stream.get("format", "Unknown {0}".format(next(unknown_counter)))
+            fmt_name = stream.get("format", f"Unknown {next(unknown_counter)}")
 
             if codec_info:
                 fmt_name = f"{fmt_name} [{codec_info}]"

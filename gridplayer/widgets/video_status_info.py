@@ -197,7 +197,7 @@ class StatusInfo(QWidget):
         )
 
 
-class TextMultiliner(object):
+class TextMultiliner:
     def __init__(self, text, font):
         self.font_metrics = QFontMetrics(font)
         self.line_spacing = self.font_metrics.lineSpacing()

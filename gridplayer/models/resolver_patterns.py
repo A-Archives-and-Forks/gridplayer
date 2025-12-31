@@ -1,7 +1,6 @@
 import re
 from enum import auto
 from fnmatch import fnmatch
-from typing import Optional
 from urllib.parse import urlparse
 
 from pydantic import BaseModel, RootModel
@@ -63,7 +62,7 @@ class ResolverPatterns(RootModel):
     def __getitem__(self, item):
         return self.root[item]
 
-    def get_resolver(self, url: str) -> Optional[URLResolver]:
+    def get_resolver(self, url: str) -> URLResolver | None:
         for pattern in self.root:
             if pattern.is_match(url):
                 return pattern.resolver

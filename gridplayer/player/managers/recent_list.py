@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import List
 
 from PyQt5.QtCore import pyqtSignal
 
@@ -74,7 +73,7 @@ class RecentListManager(ManagerBase):
     def is_any_recent_videos(self) -> bool:
         return bool(Settings().get("recent_list_videos"))
 
-    def add_recent_videos(self, videos: List[Video]) -> None:
+    def add_recent_videos(self, videos: list[Video]) -> None:
         if not self.is_recent_list_enabled():
             return
 

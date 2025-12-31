@@ -2,7 +2,6 @@ import logging
 import os
 import sys
 from pathlib import Path
-from typing import Optional, Tuple, Union
 
 from gridplayer.params import env
 from gridplayer.utils.libvlc_fixer import importing_embed_vlc
@@ -38,7 +37,7 @@ def init_vlc():
     return vlc_version, vlc_python_version
 
 
-def _get_embed_vlc_paths() -> Union[Tuple[Path, Path], Tuple[None, None]]:
+def _get_embed_vlc_paths() -> tuple[Path, Path] | tuple[None, None]:
     vlc_root = _get_embed_vlc_root()
 
     if vlc_root is None:
@@ -62,7 +61,7 @@ def _get_embed_vlc_paths() -> Union[Tuple[Path, Path], Tuple[None, None]]:
     return vlc_plugins_path, vlc_lib_path
 
 
-def _get_embed_vlc_root() -> Optional[Path]:
+def _get_embed_vlc_root() -> Path | None:
     if env.IS_PYINSTALLER:
         return Path(sys.executable).parent / "libVLC"
 

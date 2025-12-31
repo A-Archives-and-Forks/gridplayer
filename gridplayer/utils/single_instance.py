@@ -4,7 +4,6 @@ import stat
 from multiprocessing import connection
 from pathlib import Path
 from threading import Thread
-from typing import Optional
 
 from PyQt5.QtCore import QObject, pyqtSignal
 
@@ -43,10 +42,10 @@ else:
         """Dummy"""
 
 
-LISTENER: Optional[connection.Listener] = None
+LISTENER: connection.Listener | None = None
 
 
-def _init_listener() -> Optional[connection.Listener]:
+def _init_listener() -> connection.Listener | None:
     try:
         return connection.Listener(S_NAME, S_TYPE)
     except OSError:

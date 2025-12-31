@@ -102,6 +102,6 @@ def _get_name_filters():
     for ext_type in ext_types:
         ext_with_asterisk = (f"*.{e}" for e in sorted(ext_type["extensions"]))
         ext_list = " ".join(ext_with_asterisk)
-        name_filers.append("{0} ({1})".format(ext_type["name"], ext_list))
+        name_filers.append(f"{ext_type['name']} ({ext_list})")
 
     return name_filers

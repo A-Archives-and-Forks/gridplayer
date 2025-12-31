@@ -6,7 +6,7 @@ import time
 from multiprocessing.shared_memory import SharedMemory
 
 
-class releasing(object):
+class releasing:
     def __init__(self, thing):
         self.thing = thing
 
@@ -18,7 +18,7 @@ class releasing(object):
             self.thing.release()
 
 
-class SafeSharedMemory(object):
+class SafeSharedMemory:
     def __init__(self, name, lock):
         self.name = name
         self.lock = lock

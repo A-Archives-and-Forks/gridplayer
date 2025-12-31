@@ -4,7 +4,6 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from time import time
 from types import MappingProxyType
-from typing import Optional
 
 from gridplayer.params import env
 from gridplayer.params.static import (
@@ -82,14 +81,14 @@ class VlcPlayerBase(ABC):
         self._timer_unpause_failsafe = None
         self._timer_extract_media_track = None
 
-        self.media_input: Optional[MediaInput] = None
-        self.media: Optional[Media] = None
+        self.media_input: MediaInput | None = None
+        self.media: Media | None = None
 
         self._playlist_player = None
         self._media_player = None
         self._media_input_vlc = None
         self._media_options = []
-        self._tracks_manager: Optional[TracksManager] = None
+        self._tracks_manager: TracksManager | None = None
 
         self._event_manager = EventManager()
         self._event_waiter = EventWaiter()
@@ -318,7 +317,7 @@ class VlcPlayerBase(ABC):
 
         self.media_input = media_input
 
-        self._log.info("Loading {0}".format(self.media_input.uri))
+        self._log.info(f"Loading {self.media_input.uri}")
 
         if is_url(self.media_input.uri):
             self._log.debug("Loading URL")
@@ -532,9 +531,9 @@ class VlcPlayerBase(ABC):
         crop_aspect, crop_geometry = calc_crop(self.video_dimensions, size, aspect)
 
         if crop == VideoCrop(0, 0, 0, 0):
-            crop_geometry_fmt = "{0}:{1}".format(*crop_geometry)
+            crop_geometry_fmt = "{}:{}".format(*crop_geometry)
         else:
-            crop_geometry_fmt = "+{0}+{1}+{2}+{3}".format(*crop)
+            crop_geometry_fmt = "+{}+{}+{}+{}".format(*crop)
 
         self._log.debug(
             f"size: {size}"
@@ -548,7 +547,7 @@ class VlcPlayerBase(ABC):
 
         resize_scale = calc_resize_scale(self.video_dimensions, size, aspect, scale)
 
-        self._media_player.video_set_aspect_ratio("{0}:{1}".format(*crop_aspect))
+        self._media_player.video_set_aspect_ratio("{}:{}".format(*crop_aspect))
         # https://github.com/videolan/vlc/blob/e9eceaed4d838dbd84638bfb2e4bdd08294163b1/src/video_output/display.c#L887
         self._media_player.video_set_crop_geometry(crop_geometry_fmt)
         self._media_player.video_set_scale(resize_scale)

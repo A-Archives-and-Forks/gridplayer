@@ -1,5 +1,3 @@
-from typing import Optional
-
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QSize, Qt, pyqtSignal
 from PyQt5.QtGui import QDropEvent
@@ -257,7 +255,7 @@ class ResolverPatternsList(QtWidgets.QWidget):
         for row in data_rows:
             self.add_row(row)
 
-    def add_row(self, row_data: Optional[ResolverPattern] = None):
+    def add_row(self, row_data: ResolverPattern | None = None):
         if self.empty_row_idx is not None:
             self.table.set_current_row_idx(self.empty_row_idx)
             return

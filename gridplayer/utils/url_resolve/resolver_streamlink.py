@@ -88,7 +88,7 @@ class StreamlinkResolver(ResolverBase):
             self._log.debug("Streamlink - no streams found")
             raise NoResolverPlugin
 
-        self._log.debug("Streamlink - {0} stream(s) found".format(len(streams)))
+        self._log.debug(f"Streamlink - {len(streams)} stream(s) found")
 
         streams.pop("best", None)
         streams.pop("worst", None)
@@ -136,7 +136,7 @@ class StreamlinkResolver(ResolverBase):
 
     @property
     def _service_id(self):
-        return "streamlink-{0}".format(self._plugin.module)
+        return f"streamlink-{self._plugin.module}"
 
     def _convert_stream(self, src_stream, is_live: bool, is_audio_only: bool = False):
         if isinstance(src_stream, MuxedHLSStream):

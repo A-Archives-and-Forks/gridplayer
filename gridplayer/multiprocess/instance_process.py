@@ -21,7 +21,7 @@ class InstanceProcess(CommandLoop, ABC):
         self.process = Process(
             target=self.run,
             daemon=True,
-            name="{0}_{1}".format(self.__class__.__name__, self.id),
+            name=f"{self.__class__.__name__}_{self.id}",
         )
 
         self.players_per_instance = players_per_instance

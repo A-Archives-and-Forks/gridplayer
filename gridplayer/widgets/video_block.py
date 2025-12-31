@@ -3,7 +3,6 @@ import random
 import secrets
 from functools import partial
 from pathlib import Path
-from typing import Optional, Tuple
 
 from pydantic_extra_types.color import Color
 from PyQt5.QtCore import Qt, QTimer, pyqtSignal
@@ -163,7 +162,7 @@ class VideoBlock(QWidget):
         self._ctx = context
 
         # Static Params
-        self.video_params: Optional[Video] = None
+        self.video_params: Video | None = None
 
         # Runtime Params
         self._is_error = False
@@ -505,7 +504,7 @@ class VideoBlock(QWidget):
         if self.video_params.auto_reload_timer_min == 0:
             return translate("Auto Reload Timer", "Disabled")
 
-        return "{0} {1}".format(
+        return "{} {}".format(
             self.video_params.auto_reload_timer_min,
             translate("Auto Reload Timer", "minute(s)"),
         )
@@ -531,7 +530,7 @@ class VideoBlock(QWidget):
         return VideoBlockMime(id=self.id, video=self.video_params)
 
     @property
-    def size_tuple(self) -> Tuple[int, int]:
+    def size_tuple(self) -> tuple[int, int]:
         return self.size().width(), self.size().height()
 
     @property
@@ -983,7 +982,7 @@ class VideoBlock(QWidget):
         self.video_driver.set_scale(scale)
 
         if not is_silent:
-            self.info_change.emit("Zoom: {0}".format(scale))
+            self.info_change.emit(f"Zoom: {scale}")
 
     @only_with_video_tacks
     @only_initialized
@@ -1019,7 +1018,7 @@ class VideoBlock(QWidget):
 
         if not is_silent:
             self.info_change.emit(
-                "Crop: L{0} T{1} R{2} B{3}".format(*self.video_params.crop)
+                "Crop: L{} T{} R{} B{}".format(*self.video_params.crop)
             )
 
     @only_initialized

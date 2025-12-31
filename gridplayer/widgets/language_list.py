@@ -99,11 +99,7 @@ class LanguageList(QListWidget):
                 )
             )
         else:
-            item_title = "<p><b>{language}</b> ({country}){completion_txt}</p>".format(
-                language=language.title_native,
-                country=language.country_native,
-                completion_txt=completion_txt,
-            )
+            item_title = f"<p><b>{language.title_native}</b> ({language.country_native}){completion_txt}</p>"
 
         row_item_w = LanguageRowWidget(item_title, language.icon_path)
 

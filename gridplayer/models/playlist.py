@@ -1,7 +1,6 @@
 import json
 import logging
 from pathlib import Path
-from typing import Dict, List, Optional
 
 from pydantic import BaseModel, ValidationError
 
@@ -12,7 +11,7 @@ from gridplayer.settings import Settings, default_field
 
 logger = logging.getLogger(__name__)
 
-VideosList = List[Video]
+VideosList = list[Video]
 
 
 class Snapshot(BaseModel):
@@ -22,9 +21,9 @@ class Snapshot(BaseModel):
 
 class Playlist(BaseModel):
     grid_state: GridState = GridState()
-    window_state: Optional[WindowState] = None
-    videos: Optional[VideosList] = None
-    snapshots: Optional[Dict[int, Snapshot]] = None
+    window_state: WindowState | None = None
+    videos: VideosList | None = None
+    snapshots: dict[int, Snapshot] | None = None
     seek_sync_mode: SeekSyncMode = default_field("playlist/seek_sync_mode")
     shuffle_on_load: bool = default_field("playlist/shuffle_on_load")
     disable_click_pause: bool = Settings().get("playlist/disable_click_pause")
@@ -62,7 +61,7 @@ class Playlist(BaseModel):
         playlist_config.append("#GRIDPLAYER")
 
         playlist_config.append(
-            "#P:{0}".format(
+            "#P:{}".format(
                 self.model_dump_json(
                     exclude_none=True, exclude=_excluded_fields_playlist()
                 )
@@ -71,7 +70,7 @@ class Playlist(BaseModel):
 
         for idx, video in enumerate(self.videos):
             playlist_config.append(
-                "#V{0}:{1}".format(
+                "#V{}:{}".format(
                     idx,
                     video.model_dump_json(
                         exclude_none=True, exclude=_excluded_fields_video()
@@ -120,7 +119,7 @@ def _parse_video_params(playlist_in):
     return video_params
 
 
-def _parse_video_paths(playlist_in) -> List[str]:
+def _parse_video_paths(playlist_in) -> list[str]:
     return [line for line in playlist_in if line and not line.startswith("#")]
 
 

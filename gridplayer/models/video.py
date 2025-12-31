@@ -1,11 +1,11 @@
 import logging
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable, List, Optional
+from typing import Annotated
 from uuid import uuid4
 
 from pydantic import UUID4, BaseModel, Field, ValidationError
 from pydantic_extra_types.color import Color
-from typing_extensions import Annotated
 
 from gridplayer.models.video_uri import AbsoluteFilePath, VideoURI, parse_uri
 from gridplayer.params.static import (
@@ -28,13 +28,13 @@ class Video(BaseModel):
     uri: VideoURI
 
     # Presentation
-    title: Optional[str] = None
+    title: str | None = None
     color: Color = Color("white")
 
     # Seekable video
     current_position: int = 0
-    loop_start: Optional[int] = None
-    loop_end: Optional[int] = None
+    loop_start: int | None = None
+    loop_end: int | None = None
 
     repeat_mode: VideoRepeat = default_field("video_defaults/repeat")
     is_start_random: bool = default_field("video_defaults/random_loop")
@@ -54,8 +54,8 @@ class Video(BaseModel):
     auto_reload_timer_min: int = default_field("video_defaults/auto_reload_timer")
 
     # Tracks
-    audio_track_id: Optional[int] = None
-    video_track_id: Optional[int] = None
+    audio_track_id: int | None = None
+    video_track_id: int | None = None
 
     audio_channel_mode: AudioChannelMode = default_field("video_defaults/audio_mode")
 
@@ -80,7 +80,7 @@ class VideoBlockMime(BaseModel):
     video: Video
 
 
-def filter_video_uris(uris: Iterable[str]) -> List[Video]:
+def filter_video_uris(uris: Iterable[str]) -> list[Video]:
     valid_urls = []
 
     for uri in uris:

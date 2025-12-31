@@ -5,7 +5,6 @@ import platform
 import sys
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Optional
 
 from gridplayer.params import env
 
@@ -56,7 +55,7 @@ def _fix_plugins_path():
         raise RuntimeError("Unsupported platform")
 
 
-def _get_libvlc_root_path() -> Optional[Path]:
+def _get_libvlc_root_path() -> Path | None:
     vlc_module = sys.modules["gridplayer.vlc_player.vlc"]
 
     if vlc_module.dll is None or vlc_module.dll._name is None:
@@ -74,7 +73,7 @@ def _get_libvlc_root_path() -> Optional[Path]:
     return _get_libvlc_root_path_linux()
 
 
-def _get_libvlc_root_path_linux() -> Optional[Path]:
+def _get_libvlc_root_path_linux() -> Path | None:
     # https://github.com/videolan/vlc/blob/3.0.16/src/linux/dirs.c#L33
 
     with Path("/proc/self/maps").open() as f:

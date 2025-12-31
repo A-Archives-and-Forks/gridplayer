@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Annotated, Union
+from typing import Annotated
 
 from pydantic import AfterValidator, FilePath
 
@@ -22,4 +22,4 @@ def parse_uri(uri: str):
 AbsoluteFilePath = Annotated[FilePath, AfterValidator(must_be_absolute)]
 
 
-VideoURI = Union[str, AbsoluteFilePath]
+VideoURI = str | AbsoluteFilePath

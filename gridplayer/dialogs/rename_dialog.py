@@ -1,5 +1,3 @@
-from typing import Tuple
-
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QBrush, QColor, QIcon, QPainter, QPen
@@ -175,7 +173,7 @@ class QVideoRenameDialog(QtWidgets.QDialog):
         title: str,
         orig_title: str,
         cur_title: str,
-        cur_color: Tuple[int, int, int],
+        cur_color: tuple[int, int, int],
     ):
         dialog = cls(parent=parent)
         dialog.setWindowTitle(title)

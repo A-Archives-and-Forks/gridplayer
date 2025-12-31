@@ -1,9 +1,9 @@
-class LOGIC(object):
+class LOGIC:
     def __init__(self, *args):
         self.args = args
 
 
-class LOGIC_UNARY(object):
+class LOGIC_UNARY:
     def __init__(self, arg):
         self.arg = arg
 
