@@ -4,13 +4,12 @@ from abc import ABC, abstractmethod
 from streamlink import PluginError
 
 from gridplayer.models.stream import Stream, Streams
-from gridplayer.models.video_uri import VideoURL
 from gridplayer.utils.url_resolve.static import BadURLException, ResolvedVideo
 from gridplayer.utils.url_resolve.stream_detect import is_http_live_stream
 
 
 class ResolverBase(ABC):
-    def __init__(self, url: VideoURL):
+    def __init__(self, url: str):
         self._log = logging.getLogger(self.__class__.__name__)
 
         self.url = url
@@ -60,5 +59,5 @@ class DirectResolver(ResolverBase):
         return Streams({"generic": Stream(url=self.url, protocol="direct")})
 
     @staticmethod
-    def is_able_to_handle(url: VideoURL):  # noqa: WPS602
+    def is_able_to_handle(url: str):  # noqa: WPS602
         return True

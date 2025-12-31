@@ -243,7 +243,7 @@ class ResolverPatternsList(QtWidgets.QWidget):
 
     def rows_data(self) -> ResolverPatterns:
         return ResolverPatterns(
-            __root__=[
+            [
                 ResolverPattern(
                     pattern=self.table.item(row_idx, 0).text(),
                     pattern_type=self.table.cellWidget(row_idx, 1).currentData(),

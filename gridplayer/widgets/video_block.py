@@ -5,7 +5,7 @@ from functools import partial
 from pathlib import Path
 from typing import Optional, Tuple
 
-from pydantic.color import Color
+from pydantic_extra_types.color import Color
 from PyQt5.QtCore import Qt, QTimer, pyqtSignal
 from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import QStackedLayout, QWidget
@@ -22,7 +22,6 @@ from gridplayer.models.video import (
     Video,
     VideoBlockMime,
 )
-from gridplayer.models.video_uri import VideoURL
 from gridplayer.params.static import (
     OVERLAY_ACTIVITY_EVENT,
     PLAYER_ID_LENGTH,
@@ -332,7 +331,7 @@ class VideoBlock(QWidget):  # noqa: WPS230
     def video_driver_error(self, error):
         self.update_status(translate("Video Error", error))
 
-        if isinstance(self.video_params.uri, VideoURL):
+        if not self.video_params.is_local_file:
             return self.network_error()
 
         return self.error()

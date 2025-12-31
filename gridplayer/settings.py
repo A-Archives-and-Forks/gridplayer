@@ -77,7 +77,7 @@ _default_settings = {
     "internal/fake_overlay_invisibility": False,
     "streaming/hls_via_streamlink": True,
     "streaming/resolver_priority": URLResolver.STREAMLINK,
-    "streaming/resolver_priority_patterns": ResolverPatterns(__root__=[]),
+    "streaming/resolver_priority_patterns": ResolverPatterns([]),
     "recent_list_videos": RecentListVideos(),
     "recent_list_playlists": RecentListPlaylists(),
 }
@@ -188,12 +188,12 @@ class _Settings(object):
             return setting_value.value
 
         if isinstance(setting_value, BaseModel):
-            return setting_value.json()
+            return setting_value.model_dump_json()
 
         if isinstance(setting_value, (Path, str)):
             return str(setting_value)
 
-        return setting_value
+        return str(setting_value)
 
 
 def Settings():

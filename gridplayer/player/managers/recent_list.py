@@ -131,7 +131,7 @@ class RecentListManager(ManagerBase):
         Settings().set("recent_list_playlists", recent_playlists)
 
 
-def elide_uri(uri: Union[VideoURI, Path], max_length: int = 100) -> str:
+def elide_uri(uri: VideoURI, max_length: int = 100) -> str:
     if len(str(uri)) <= max_length:
         return str(uri)
 

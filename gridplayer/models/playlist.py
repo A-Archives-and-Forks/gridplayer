@@ -22,9 +22,9 @@ class Snapshot(BaseModel):
 
 class Playlist(BaseModel):
     grid_state: GridState = GridState()
-    window_state: Optional[WindowState]
-    videos: Optional[VideosList]
-    snapshots: Optional[Dict[int, Snapshot]]
+    window_state: Optional[WindowState] = None
+    videos: Optional[VideosList] = None
+    snapshots: Optional[Dict[int, Snapshot]] = None
     seek_sync_mode: SeekSyncMode = default_field("playlist/seek_sync_mode")
     shuffle_on_load: bool = default_field("playlist/shuffle_on_load")
     disable_click_pause: bool = Settings().get("playlist/disable_click_pause")
@@ -63,7 +63,9 @@ class Playlist(BaseModel):
 
         playlist_config.append(
             "#P:{0}".format(
-                self.json(exclude_none=True, exclude=_excluded_fields_playlist())
+                self.model_dump_json(
+                    exclude_none=True, exclude=_excluded_fields_playlist()
+                )
             )
         )
 
@@ -71,7 +73,9 @@ class Playlist(BaseModel):
             playlist_config.append(
                 "#V{0}:{1}".format(
                     idx,
-                    video.json(exclude_none=True, exclude=_excluded_fields_video()),
+                    video.model_dump_json(
+                        exclude_none=True, exclude=_excluded_fields_video()
+                    ),
                 )
             )
             playlist_vids.append(str(video.uri))

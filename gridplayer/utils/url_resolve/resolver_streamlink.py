@@ -5,7 +5,6 @@ from streamlink.plugin import Plugin
 from streamlink.stream import HLSStream, MuxedHLSStream
 
 from gridplayer.models.stream import HashableDict, Stream, Streams, StreamSessionOpts
-from gridplayer.models.video_uri import VideoURL
 from gridplayer.settings import Settings
 from gridplayer.utils.url_resolve.resolver_base import ResolverBase
 from gridplayer.utils.url_resolve.static import NoResolverPlugin
@@ -49,7 +48,7 @@ class StreamlinkResolver(ResolverBase):
         return Streams({**video_streams, **audio_only_streams})
 
     @staticmethod
-    def is_able_to_handle(url: VideoURL):  # noqa: WPS602
+    def is_able_to_handle(url: str):  # noqa: WPS602
         try:
             return bool(Streamlink().resolve_url(url))
         except NoPluginError:

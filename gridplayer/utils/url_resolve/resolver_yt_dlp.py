@@ -9,7 +9,6 @@ from yt_dlp import DownloadError, YoutubeDL
 from yt_dlp.utils import UnsupportedError
 
 from gridplayer.models.stream import HashableDict, Stream, Streams, StreamSessionOpts
-from gridplayer.models.video_uri import VideoURL
 from gridplayer.settings import Settings
 from gridplayer.utils.url_resolve.resolver_base import ResolverBase
 from gridplayer.utils.url_resolve.static import (
@@ -58,7 +57,7 @@ class YoutubeDLResolver(ResolverBase):
         )
 
     @staticmethod
-    def is_able_to_handle(url: VideoURL) -> bool:  # noqa: WPS602
+    def is_able_to_handle(url: str) -> bool:  # noqa: WPS602
         logger = logging.getLogger("YoutubeDLResolver")
         with YoutubeDL({"logger": logger}) as ydl:
             ies = ydl._ies  # noqa: WPS437

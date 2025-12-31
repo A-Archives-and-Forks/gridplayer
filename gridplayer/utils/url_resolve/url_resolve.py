@@ -7,7 +7,6 @@ from PyQt5.QtCore import QObject, QThread, pyqtSignal
 from yt_dlp.extractor import youtube as yt_extractor
 
 from gridplayer.models.resolver_patterns import ResolverPatterns
-from gridplayer.models.video_uri import VideoURL
 from gridplayer.params.static import URLResolver
 from gridplayer.settings import Settings
 from gridplayer.utils.qt import translate
@@ -59,7 +58,7 @@ class VideoURLResolverWorker(QObject):
             self._log.exception("URL resolver exception")
             self._error(translate("Video Error", "Failed to resolve URL"))
 
-    def resolve_url(self, url: VideoURL) -> Optional[ResolvedVideo]:
+    def resolve_url(self, url: str) -> Optional[ResolvedVideo]:
         self.update_status.emit(translate("Video Status", "Picking URL resolvers"))
         url_resolvers = _pick_resolvers(url)
 
@@ -131,7 +130,7 @@ def _pick_resolvers(url) -> Dict[URLResolver, Type[ResolverBase]]:
 
 
 def _get_resolvers(  # noqa: WPS210
-    url: VideoURL,
+    url: str,
 ) -> Dict[URLResolver, Type[ResolverBase]]:
     priority_resolver: URLResolver = Settings().get("streaming/resolver_priority")
     patterns: ResolverPatterns = Settings().get("streaming/resolver_priority_patterns")
@@ -146,7 +145,7 @@ def _get_resolvers(  # noqa: WPS210
     return resolvers
 
 
-def _is_match_youtube(url: VideoURL) -> bool:
+def _is_match_youtube(url: str) -> bool:
     yt_extractors = (
         yt_extractor.YoutubeIE,
         yt_extractor.YoutubeYtBeIE,

@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QFileDialog, qApp
 
 from gridplayer.dialogs.add_urls import QAddURLsDialog
 from gridplayer.models.video import filter_video_uris
-from gridplayer.models.video_uri import VideoURL
+from gridplayer.models.video_uri import URL_ALLOWED_SCHEMES
 from gridplayer.params.extensions import (
     SUPPORTED_AUDIO_EXT,
     SUPPORTED_MEDIA_EXT,
@@ -47,7 +47,7 @@ class AddVideosManager(ManagerBase):
         urls = QAddURLsDialog.get_urls(
             parent=self.parent(),
             title=translate("Dialog - Add URLs", "Add URL(s)", "Header"),
-            supported_schemas=VideoURL.allowed_schemes,
+            supported_schemas=URL_ALLOWED_SCHEMES,
             supported_urls=PLUGIN_URLS,
         )
 
