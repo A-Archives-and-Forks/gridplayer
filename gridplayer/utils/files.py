@@ -14,7 +14,7 @@ def extract_mime_video(dnd_data: QMimeData) -> VideoBlockMime | None:
     if not mime_has_video(dnd_data):
         return None
 
-    return VideoBlockMime.parse_raw(
+    return VideoBlockMime.model_validate_json(
         bytes(dnd_data.data("application/x-gridplayer-video")).decode("utf-8")
     )
 

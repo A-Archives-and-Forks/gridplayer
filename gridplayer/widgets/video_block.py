@@ -707,7 +707,7 @@ class VideoBlock(QWidget):
         self.switch_stream_quality(snapshot.stream_quality)
         self.set_auto_reload_timer(snapshot.auto_reload_timer_min)
 
-        self.video_params = snapshot.copy()
+        self.video_params = snapshot.model_copy()
 
     def set_video(self, video_params: Video):
         is_first_video = self.video_params is None

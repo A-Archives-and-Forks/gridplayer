@@ -84,7 +84,7 @@ class Playlist(BaseModel):
     @classmethod
     def _parse_params(cls, playlist_in):
         playlist_params = (
-            cls.parse_raw(c[3:]) for c in playlist_in if c.startswith("#P:")
+            cls.model_validate_json(c[3:]) for c in playlist_in if c.startswith("#P:")
         )
         return next(playlist_params, cls())
 
