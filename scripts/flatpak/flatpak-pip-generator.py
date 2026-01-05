@@ -110,6 +110,16 @@ parser.add_argument(
         "(e.g. --ignore-pkg 'foo>=3.0.0' 'baz>=21.0')."
     ),
 )
+parser.add_argument(
+    "--use-prebuilt-wheels",
+    nargs="*",
+    default=[],
+    help=(
+        "Comma-separated list of package names that should use pre-built wheels "
+        "for aarch64 and x86_64 architectures instead of source packages. "
+        "Example: --use-prebuilt-wheels numpy pandas pydantic-core"
+    ),
+)
 
 opts = parser.parse_args()
 
@@ -189,6 +199,46 @@ def get_pypi_url(name: str, filename: str) -> str:
                 if source["filename"] == filename:
                     return str(source["url"])
         raise Exception(f"Failed to extract url from {url}")
+
+
+def get_wheel_urls_for_arches(
+    name: str, version: str, python_version: str = "cp312"
+) -> dict[str, dict[str, str]]:
+    """Get wheel URLs for both aarch64 and x86_64 architectures."""
+    url = f"https://pypi.org/pypi/{name}/{version}/json"
+    arch_mapping = {
+        "aarch64": "manylinux_2_17_aarch64.manylinux2014_aarch64",
+        "x86_64": "manylinux_2_17_x86_64.manylinux2014_x86_64",
+    }
+
+    results = {}
+
+    with urllib.request.urlopen(url) as response:  # noqa: S310
+        body = json.loads(response.read().decode("utf-8"))
+
+        for arch, arch_pattern in arch_mapping.items():
+            for source in body["urls"]:
+                filename = source["filename"]
+                # Match wheels for the specific arch and python version
+                if (
+                    filename.endswith(".whl")
+                    and arch_pattern in filename
+                    and python_version in filename
+                ):
+                    results[arch] = {
+                        "url": source["url"],
+                        "sha256": source["digests"]["sha256"],
+                        "filename": filename,
+                    }
+                    break
+
+    if len(results) != 2:
+        missing = set(arch_mapping.keys()) - set(results.keys())
+        raise Exception(
+            f"Failed to find wheels for {name}-{version} for architectures: {missing}"
+        )
+
+    return results
 
 
 def get_tar_package_url_pypi(name: str, version: str) -> str:
@@ -440,6 +490,15 @@ def handle_req_env_markers(requirements_text: str) -> str:
     return "\n".join(filtered_lines)
 
 
+# Normalize prebuilt wheel package names (case-insensitive, handle underscores)
+prebuilt_wheel_packages = set()
+if opts.use_prebuilt_wheels:
+    for pkg in opts.use_prebuilt_wheels:
+        # Normalize: lowercase and replace underscores with hyphens
+        normalized = pkg.lower().replace("_", "-")
+        prebuilt_wheel_packages.add(normalized)
+    print(f"Using prebuilt wheels for: {sorted(prebuilt_wheel_packages)}")
+
 packages = []
 if opts.requirements_file:
     requirements_file_input = os.path.expanduser(opts.requirements_file)
@@ -582,6 +641,7 @@ if not output_filename.endswith(suffix):
 modules: list[dict[str, str | list[str] | list[dict[str, Any]]]] = []
 vcs_modules: list[dict[str, str | list[str] | list[dict[str, Any]]]] = []
 sources = {}
+wheel_sources = {}  # Separate storage for wheel-based packages
 
 unresolved_dependencies_errors = []
 
@@ -658,10 +718,47 @@ with tempfile.TemporaryDirectory(prefix=tempdir_prefix) as tempdir:
         if x.vcs and x.name
     }
 
+    # Process prebuilt wheel packages
+    fprint("Processing prebuilt wheel packages")
+    for filename in os.listdir(tempdir):
+        name = get_package_name(filename)
+        normalized_name = name.lower().replace("_", "-")
+
+        if normalized_name in prebuilt_wheel_packages:
+            version = get_file_version(filename)
+            print(f"Fetching wheel URLs for {name} version {version}")
+
+            try:
+                # Determine Python version from the current wheel filename
+                py_version_match = re.search(r"cp(\d+)", filename)
+                py_version = (
+                    f"cp{py_version_match.group(1)}" if py_version_match else "cp312"
+                )
+
+                wheel_info = get_wheel_urls_for_arches(name, version, py_version)
+                wheel_sources[normalized_name] = {
+                    "version": version,
+                    "wheels": wheel_info,
+                }
+                print(f"Successfully fetched wheels for {name}")
+            except Exception as err:
+                print(f"Warning: Failed to fetch wheels for {name}: {err}")
+                unresolved_dependencies_errors.append(err)
+
     fprint("Obtaining hashes and urls")
     for filename in os.listdir(tempdir):
         source: OrderedDict[str, str | dict[str, str]] = OrderedDict()
         name = get_package_name(filename)
+        normalized_name = name.lower().replace("_", "-")
+
+        # Skip if this package should use prebuilt wheels
+        if (
+            normalized_name in prebuilt_wheel_packages
+            and normalized_name in wheel_sources
+        ):
+            print(f"Skipping {name} (using prebuilt wheels)")
+            continue
+
         sha256 = get_file_hash(os.path.join(tempdir, filename))
         is_pypi = False
 
@@ -779,7 +876,40 @@ for package in packages:
 
     is_vcs = bool(package.vcs)
     package_sources = []
+
+    # Check if this package should use prebuilt wheels
+    normalized_pkg_name = package.name.lower().replace("_", "-")
+    use_wheels_for_this_pkg = normalized_pkg_name in wheel_sources
+
+    if use_wheels_for_this_pkg:
+        # Add wheel sources for both architectures
+        wheel_data = wheel_sources[normalized_pkg_name]
+        for arch in ["aarch64", "x86_64"]:
+            if arch in wheel_data["wheels"]:
+                wheel_info = wheel_data["wheels"][arch]
+                wheel_source = OrderedDict(
+                    [
+                        ("type", "file"),
+                        ("url", wheel_info["url"]),
+                        ("sha256", wheel_info["sha256"]),
+                        ("only-arches", [arch]),
+                    ]
+                )
+                if opts.checker_data:
+                    wheel_source["x-checker-data"] = {
+                        "type": "pypi",
+                        "name": normalized_pkg_name,
+                        "packagetype": "bdist_wheel",
+                    }
+                package_sources.append(wheel_source)
+
+    # Add dependencies (always process dependencies, whether using wheels or not)
     for dependency in dependencies:
+        # Skip the main package itself if it's using wheels (already added above)
+        dep_normalized = dependency.lower().replace("_", "-")
+        if use_wheels_for_this_pkg and dep_normalized == normalized_pkg_name:
+            continue
+
         casefolded = dependency.casefold()
         if casefolded in sources and sources[casefolded].get("pypi") is True:
             source = sources[casefolded]
