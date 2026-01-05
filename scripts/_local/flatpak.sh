@@ -15,12 +15,13 @@ elif [ "$1" == "del" ]; then
 fi
 
 if ! command -v flatpak; then
-    sudo apt install flatpak
+    sudo apt install -y flatpak
     flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
-    flatpak install flathub org.kde.Platform//5.15-22.08
-    flatpak install flathub org.kde.Sdk//5.15-22.08
 fi
+
+flatpak install --system -y flathub org.kde.Platform//5.15-24.08
+flatpak install --system -y flathub org.kde.Sdk//5.15-24.08
+flatpak install --system -y flathub org.flatpak.Builder
 
 poetry build -f sdist
 poetry export --without-hashes -f requirements.txt --output "$DIST_DIR/requirements.txt"

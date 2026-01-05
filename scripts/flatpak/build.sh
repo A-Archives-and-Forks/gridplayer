@@ -33,7 +33,7 @@ sed -i "s#{TAR_FILE_SHA256}#$TAR_FILE_SHA256#g" "$BUILD_DIR_FLATPAK/$APP_ID.yml"
 
 if [ ! -d "$BUILD_DIR_FLATPAK/shared-modules" ]; then
     git clone -n https://github.com/flathub/shared-modules "$BUILD_DIR_FLATPAK/shared-modules"
-    (cd "$BUILD_DIR_FLATPAK/shared-modules" && git checkout -q 50314360ded6fa3b9f0b602513b1164b7a6636ed)
+    (cd "$BUILD_DIR_FLATPAK/shared-modules" && git checkout -q 0529b121864669aa14fac1c67b5684a4bc6542b8)
 fi
 
 # Prevent strange freezing
