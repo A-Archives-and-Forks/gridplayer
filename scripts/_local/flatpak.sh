@@ -21,6 +21,7 @@ fi
 
 flatpak install --system -y flathub org.kde.Platform//5.15-24.08
 flatpak install --system -y flathub org.kde.Sdk//5.15-24.08
+flatpak install --system -y flathub com.riverbankcomputing.PyQt.BaseApp//5.15-24.08
 flatpak install --system -y flathub org.flatpak.Builder
 
 poetry build -f sdist

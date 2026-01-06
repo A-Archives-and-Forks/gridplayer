@@ -110,7 +110,6 @@ generate_flathub_git() {
     FLATPAK_GIT_COMMIT="$1"
     BUILD_DIR_FLATHUB="$2"
 
-    cp "$SCRIPT_DIR"/dependencies/*.yml "$BUILD_DIR_FLATHUB"
     cp "$SCRIPT_DIR"/libvlc/* "$BUILD_DIR_FLATHUB"
 
     cp "$BUILD_DIR/flatpak_python_deps/dependencies.yml" "$BUILD_DIR_FLATHUB/dependencies.yml"

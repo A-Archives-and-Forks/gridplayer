@@ -15,7 +15,6 @@ mkdir -p "$BUILD_DIR_FLATPAK"
 cp "$DIST_DIR"/*.tar.gz "$BUILD_DIR_FLATPAK"
 cp -R "$BUILD_DIR/meta" "$BUILD_DIR_FLATPAK"
 
-cp "$SCRIPT_DIR"/dependencies/*.yml "$BUILD_DIR_FLATPAK"
 cp "$SCRIPT_DIR"/libvlc/* "$BUILD_DIR_FLATPAK"
 
 if [ ! -f "$BUILD_DIR/flatpak_python_deps/dependencies.yml" ]; then
