@@ -12,7 +12,7 @@ else
     VLC_URL="https://get.videolan.org/vlc/3.0.21/macosx/vlc-3.0.21-intel64.dmg"
 fi
 
-PYINSTALLER_VERSION="6.16.0"
+PYINSTALLER_VERSION="6.17.0"
 
 mkdir -p "$BUILD_DIR"
 
@@ -39,8 +39,7 @@ pyinstaller --clean --noconfirm "$BUILD_DIR/$APP_NAME.spec"
 
 echo "Embedding VLC"
 
-mkdir -p "$BUILD_DIR/libVLC"
-VLC_EMBED_SRC=$(realpath "$BUILD_DIR/libVLC")
+VLC_EMBED_SRC=$(realpath "$BUILD_DIR")/libVLC
 
 if [ ! -d "$VLC_EMBED_SRC" ]; then
     wget -q -nc -O "$BUILD_DIR/vlc.dmg" "$VLC_URL" || true
